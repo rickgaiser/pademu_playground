@@ -516,9 +516,11 @@ static void ds34usb_set_rumble(struct pad_funcs* pf, u8 lrum, u8 rrum)
 
     WaitSema(pad->sema);
 
-    pad->update_rum = 1;
-    pad->lrum = lrum;
-    pad->rrum = rrum;
+    if ((pad->lrum != lrum) || (pad->rrum != rrum)) {
+        pad->lrum = lrum;
+        pad->rrum = rrum;
+        pad->update_rum = 1;
+    }
 
     SignalSema(pad->sema);
 }
@@ -531,11 +533,11 @@ static int ds34usb_get_data(struct pad_funcs* pf, u8 *dst, int size, int port)
     WaitSema(pad->sema);
 
     if (pad->update_rum) {
-        //ret = LEDRumble(pad->oldled, pad->lrum, pad->rrum, port);
-        //if (ret == USB_RC_OK)
-        //    TransferWait(pad->cmd_sema);
-        //else
-        //    DPRINTF("DS34USB: LEDRumble usb transfer error %d\n", ret);
+        ret = LEDRumble(pad->oldled, pad->lrum, pad->rrum, port);
+        if (ret == USB_RC_OK)
+            TransferWait(pad->cmd_sema);
+        else
+            DPRINTF("DS34USB: LEDRumble usb transfer error %d\n", ret);
 
         pad->update_rum = 0;
     }

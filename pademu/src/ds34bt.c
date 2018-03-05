@@ -1370,9 +1370,11 @@ static void ds34bt_set_rumble(struct pad_funcs* pf, u8 lrum, u8 rrum)
 
     WaitSema(bt_dev.hid_sema);
 
-    pad->update_rum = 1;
-    pad->lrum = lrum;
-    pad->rrum = rrum;
+    if ((pad->lrum != lrum) || (pad->rrum != rrum)) {
+        pad->lrum = lrum;
+        pad->rrum = rrum;
+        pad->update_rum = 1;
+    }
 
     SignalSema(bt_dev.hid_sema);
 }
