@@ -1,11 +1,9 @@
 all:
-	$(MAKE) -C pademu all USE_USB=1
-	$(MAKE) -C pademu all USE_BT=1
+	$(MAKE) -C pademu all USE_USB=1 USE_BT=1
 	$(MAKE) -C sample_padx all
 
 clean:
-	$(MAKE) -C pademu clean USE_USB=1
-	$(MAKE) -C pademu clean USE_BT=1
+	$(MAKE) -C pademu clean USE_USB=1 USE_BT=1
 	$(MAKE) -C sample_padx clean
 
 copy:

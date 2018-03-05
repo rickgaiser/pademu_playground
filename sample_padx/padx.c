@@ -42,7 +42,7 @@ static void loadmodules(int free)
         SleepThread();
     }
 
-    if((ret = SifLoadModule("host:pademu/irx.usb/pademu.irx", 0, NULL)) < 0)
+    if((ret = SifLoadModule("host:pademu/irx/pademu.irx", 0, NULL)) < 0)
     {
         printf("Failed to load pademu.irx module (%d)\n", ret);
         SleepThread();
