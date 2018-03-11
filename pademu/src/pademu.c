@@ -16,8 +16,8 @@
 #include "ds34usb.h"
 #endif
 
-#define DPRINTF(x...) printf(x)
-//#define DPRINTF(x...)
+//#define DPRINTF(x...) printf(x)
+#define DPRINTF(x...)
 
 typedef struct
 {

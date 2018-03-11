@@ -232,7 +232,7 @@ static void usb_config_set(int result, int count, void *arg)
     int pad = (int)arg;
     u8 led[4];
 
-    DPRINTF("%s", __FUNCTION__);
+    DPRINTF("%s\n", __FUNCTION__);
 
     PollSema(ds34pad[pad].sema);
 
