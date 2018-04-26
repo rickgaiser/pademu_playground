@@ -40,8 +40,6 @@ typedef struct
 
 #define MAX_PORTS 4
 
-#define PAD_STATE_RUNNING 0x08
-
 IRX_ID("pademu", 1, 1);
 
 PtrRegisterLibraryEntires pRegisterLibraryEntires; /* Pointer to RegisterLibraryEntires routine */
@@ -402,12 +400,6 @@ static void pademu_cmd(int port, u8 *in, u8 *out, u8 out_size)
     mips_memset(out, 0x00, out_size);
 
     if (padf[port] == NULL) {
-        pad[port].lrum = 2;
-        pad[port].rrum = 2;
-        return;
-    }
-
-    if (!(padf[port]->get_status(padf[port]) & PAD_STATE_RUNNING)) {
         pad[port].lrum = 2;
         pad[port].rrum = 2;
         return;

@@ -70,7 +70,6 @@ static void DS3USB_init(int pad);
 static void readReport(u8 *data, int pad);
 static int LEDRumble(u8 *led, u8 lrum, u8 rrum, int pad);
 
-static int  ds34usb_get_status(struct pad_funcs* pf);
 static int  ds34usb_get_data  (struct pad_funcs* pf, u8 *dst, int size, int port);
 static void ds34usb_set_rumble(struct pad_funcs* pf, u8 lrum, u8 rrum);
 static void ds34usb_set_mode  (struct pad_funcs* pf, int mode, int lock);
@@ -586,20 +585,6 @@ void ds34usb_reset()
         usb_release(pad);
 }
 
-static int ds34usb_get_status(struct pad_funcs* pf)
-{
-    ds34usb_device *pad = pf->priv;
-    int ret;
-
-    WaitSema(pad->sema);
-
-    ret = pad->status;
-
-    SignalSema(pad->sema);
-
-    return ret;
-}
-
 int ds34usb_init(u8 pads, u8 options)
 {
     int pad;
@@ -639,7 +624,6 @@ int ds34usb_init(u8 pads, u8 options)
         }
 
         padf[pad].priv = &ds34pad[pad];
-        padf[pad].get_status = ds34usb_get_status;
         padf[pad].get_data   = ds34usb_get_data;
         padf[pad].set_rumble = ds34usb_set_rumble;
         padf[pad].set_mode   = ds34usb_set_mode;
